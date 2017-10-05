@@ -16,6 +16,7 @@
 //});
 
 use App\Http\Controllers\PolicyController;
+use App\Http\Controllers\ThxController;
 
 Auth::routes();
 
@@ -28,15 +29,15 @@ Route::get('/nasze-produkty', 'HomeController@index')->name('front.home.nasze.pr
 Route::get('/kontakt', 'HomeController@index')->name('front.home.kontakt');
 
 Route::get('/polityka-prywatnosci', [PolicyController::class, 'index'])->name('front.policy');
-Route::get('/formularz/zapisz', 'HomeController@index')->name('front.form.save');
+Route::get('/podziekowania/promocja', [ThxController::class, 'promotion'])->name('front.thx.promo');
+Route::get('/podziekowania/konkurs', [ThxController::class, 'contest'])->name('front.thx.contest');
+Route::get('/podziekowania/rejestracja', [ThxController::class, 'form'])->name('front.thx.form');
+
 Route::get('/formularz/promocja', 'HomeController@index')->name('front.form.promo');
 Route::get('/formularz/konkurs', 'HomeController@index')->name('front.form.contest');
+
+Route::get('/formularz/zapisz', 'HomeController@index')->name('front.form.save');
 Route::get('/formularz/pobierz-produkty', 'HomeController@index')->name('front.get.products');
-Route::get('/podziekowania/promocja', 'HomeController@index')->name('front.thx.promo');
-Route::get('/podziekowania/konkurs', 'HomeController@index')->name('front.thx.contest');
-Route::get('/podziekowania/rejestracja', 'HomeController@index')->name('front.thx.signup');
 Route::get('/potwierdzam/{id}/{token}', 'HomeController@index')->name('front.confirm');
-Route::get('/aplikacja', 'HomeController@index')->name('front.application');
-Route::get('/zasady-konkursu', 'HomeController@index')->name('front.rules');
 Route::get('/pobierz', 'HomeController@index')->name('front.download');
 Route::get('/zgloszenie/{id}', 'HomeController@index')->name('front.application.id');

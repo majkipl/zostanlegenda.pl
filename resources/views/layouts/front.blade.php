@@ -120,9 +120,6 @@
 @else
     <body class="cbp-spmenu-push">
 @endisset
-
-
-
     <div class="loader" id="loader">
         <div class="spinner">
             <div class="rect1"></div>
