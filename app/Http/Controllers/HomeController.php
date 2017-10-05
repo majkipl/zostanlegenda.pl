@@ -13,7 +13,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+//        $this->middleware('auth');
     }
 
     /**
@@ -23,6 +23,33 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        return view('home/index', [
+            'isEndPromotion' => false,
+            'isEndContest' => false,
+            'isEndResult' => false,
+            'week' => [],
+            'dateWeek' => [
+                '14.11.2017',
+                '21.11.2017',
+                '28.11.2017',
+                '05.12.2017',
+                '12.12.2017',
+                '19.12.2017',
+                '28.12.2017']
+        ]);
     }
+
+//    public static function getDateWeek( $index = false, $count = false )
+//    {
+//        $dates = array('14.11.2017',
+//            '21.11.2017',
+//            '28.11.2017',
+//            '05.12.2017',
+//            '12.12.2017',
+//            '19.12.2017',
+//            '28.12.2017',);
+//
+//        return $dates[$count - $index - 1];
+//    }
+
 }
