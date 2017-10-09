@@ -15,29 +15,43 @@
 //    return view('welcome');
 //});
 
+use App\Http\Controllers\ConfirmController;
+use App\Http\Controllers\ContestController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PolicyController;
+use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\ThxController;
 
 Auth::routes();
 
-Route::get('/', 'HomeController@index')->name('front.home');
-Route::get('/nagrody', 'HomeController@index')->name('front.home.nagrody');
-Route::get('/wez-udzial', 'HomeController@index')->name('front.home.wez.udzial');
-Route::get('/zgloszenia-tygodnia', 'HomeController@index')->name('front.home.zgloszenia.tygodnia');
-Route::get('/zgloszenia', 'HomeController@index')->name('front.home.zgloszenia');
-Route::get('/nasze-produkty', 'HomeController@index')->name('front.home.nasze.produkty');
-Route::get('/kontakt', 'HomeController@index')->name('front.home.kontakt');
+Route::get('/', [HomeController::class, 'index'])->name('front.home');
+Route::get('/nagrody', [HomeController::class, 'index'])->name('front.home.nagrody');
+Route::get('/wez-udzial', [HomeController::class, 'index'])->name('front.home.wez.udzial');
+Route::get('/zgloszenia-tygodnia', [HomeController::class, 'index'])->name('front.home.zgloszenia.tygodnia');
+Route::get('/zgloszenia', [HomeController::class, 'index'])->name('front.home.zgloszenia');
+Route::get('/nasze-produkty', [HomeController::class, 'index'])->name('front.home.nasze.produkty');
+Route::get('/kontakt', [HomeController::class, 'index'])->name('front.home.kontakt');
 
 Route::get('/polityka-prywatnosci', [PolicyController::class, 'index'])->name('front.policy');
 Route::get('/podziekowania/promocja', [ThxController::class, 'promotion'])->name('front.thx.promo');
 Route::get('/podziekowania/konkurs', [ThxController::class, 'contest'])->name('front.thx.contest');
 Route::get('/podziekowania/rejestracja', [ThxController::class, 'form'])->name('front.thx.form');
 
-Route::get('/formularz/promocja', 'HomeController@index')->name('front.form.promo');
-Route::get('/formularz/konkurs', 'HomeController@index')->name('front.form.contest');
+Route::get('/formularz/promocja', [PromotionController::class, 'form'])->name('front.form.promo');
+Route::get('/formularz/konkurs', [ContestController::class, 'form'])->name('front.form.contest');
 
-Route::get('/formularz/zapisz', 'HomeController@index')->name('front.form.save');
+Route::post('/formularz/promocja/zapisz', [PromotionController::class, 'store'])->name('front.form.promo.save');
+Route::post('/formularz/konkurs/zapisz', [ContestController::class, 'store'])->name('front.form.contest.save');
+
+Route::get('/promocja/potwierdzam/{promotion}/{token}', [ConfirmController::class, 'promotion'])->name('front.confirm.promo');
+Route::get('/konkurs/potwierdzam/{contest}/{token}', [ConfirmController::class, 'contest'])->name('front.confirm.contest');
+
+Route::get('/zgloszenia/{contest}', [ContestController::class, 'show'])->name('front.application.id');
+
+
+
+
+
 Route::get('/formularz/pobierz-produkty', 'HomeController@index')->name('front.get.products');
-Route::get('/potwierdzam/{id}/{token}', 'HomeController@index')->name('front.confirm');
+
 Route::get('/pobierz', 'HomeController@index')->name('front.download');
-Route::get('/zgloszenie/{id}', 'HomeController@index')->name('front.application.id');

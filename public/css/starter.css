@@ -164,18 +164,18 @@ section .container {
 }
 
 .fieldset {
-    margin-top: 30px;
+    /*margin-top: 30px;*/
 }
 
 .field:before {
-    *content: '';
-    *background-color: #e41e13;
-    *width: 7px;
-    *height: 20px;
-    *position: absolute;
-    *top: 10px;
-    *left: -3px;
-    *z-index: 1;
+    /*content: '';*/
+    /*background-color: #e41e13;*/
+    /*width: 7px;*/
+    /*height: 20px;*/
+    /*position: absolute;*/
+    /*top: 10px;*/
+    /*left: -3px;*/
+    /*z-index: 1;*/
 }
 
 input {
@@ -1915,6 +1915,7 @@ footer p a {
 #form .cta-button  {
     display: inline-block;
     margin-top: 20px;
+    border: 0;
 }
 
 #form label.css-label {
@@ -1983,7 +1984,7 @@ footer p a {
     text-align: left;
     width: 100%;
     position: relative;
-    margin-top: 40px;
+    margin-top: 0;
     padding-top: 0;
 }
 
@@ -2003,18 +2004,18 @@ footer p a {
 }
 
 #form .uploads {
-    width: 100%;
-    min-height: 200px;
-    float: left;
-    position: relative;
-    background-repeat: no-repeat;
-    background-size: cover;
-    transition: all 0.5s ease;
-    border: 1px solid #dcdcdc;
-    padding: 10px 15px;
-    background-color: #dadada;
-    box-shadow: 0 0 5px rgba(0,0,0,0.2);
-    color: #000000;
+    /*width: 100%;*/
+    /*min-height: 200px;*/
+    /*float: left;*/
+    /*position: relative;*/
+    /*background-repeat: no-repeat;*/
+    /*background-size: cover;*/
+    /*transition: all 0.5s ease;*/
+    /*border: 1px solid #dcdcdc;*/
+    /*padding: 10px 15px;*/
+    /*background-color: #dadada;*/
+    /*box-shadow: 0 0 5px rgba(0,0,0,0.2);*/
+    /*color: #000000;*/
 }
 
 #form .uploads:hover {
@@ -2154,6 +2155,60 @@ footer p a {
 
 #form .hideOn {
     display: none;
+}
+
+#form .file-uploads {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#form .thumbs {
+    margin-bottom: 30px;
+}
+
+#form .thumbs img {
+    max-width: 100%;
+}
+
+#form .info {
+    width: 290px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+    color: #000;
+    padding: 0 30px;
+    text-align: center;
+    border: 1px solid #dcdcdc;
+    background-color: #dadada;
+    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+
+#form .info img {
+    max-width: 48px;
+    margin-bottom: 15px;
+}
+
+#form .hidden {
+    display: none;
+}
+
+#form .hidden img {
+    margin: 0 auto;
+    max-width: 300px;
+    display: block;
+}
+
+#form .uploads-d-none {
+    overflow: hidden;
+    width: 0;
+    height: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 /*

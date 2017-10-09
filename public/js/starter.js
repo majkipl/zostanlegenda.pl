@@ -1,6 +1,15 @@
 var event;
 var height;
 
+// Pobieramy aktualny protokół (http lub https)
+const protocol = window.location.protocol;
+
+// Pobieramy aktualną domenę strony
+const domain = window.location.hostname;
+
+// Tworzymy pełny adres strony z protokołem
+const url_home = protocol + '//' + domain;
+
 $(window).load(function(e) {
     event = e || window.event;
 
@@ -19,11 +28,6 @@ $(window).scroll(function(e) {
     event = e || window.event;
     starter.main.scroll();
     starter.main.menu_light();
-    //starter.effects.products_effects_fall();
-    //starter.effects.rules_effects_fall();
-    //starter.effects.section_effect_sw();
-    //starter.effects.take_effects_airplane();
-    //starter.effects.section_effects_h2v();
 });
 
 function infoFlashBox() {
@@ -63,7 +67,9 @@ var starter = {
 
     main: {
         init: function() {
-            starter.main.click();
+            starter.main.onClick();
+            starter.main.onChange();
+            starter.main.onSubmit();
 
             starter.main.keyup();
 
@@ -77,9 +83,9 @@ var starter = {
 
             //starter.main.bias();
 
-            starter.main.upload('receipt');
-            starter.main.upload('ean');
-            starter.main.upload('tip');
+            // starter.main.upload('receipt');
+            // starter.main.upload('ean');
+            // starter.main.upload('tip');
 
             //starter.main.painter();
 
@@ -98,15 +104,7 @@ var starter = {
             starter.main.error_scroll();
         },
 
-
-        click: function() {
-            /*
-            $('selector').click(function(){
-
-            });
-            */
-
-
+        onClick: function() {
             $(document).on('click', '#i_want_more', function(){
                 $(this).addClass('hidden');
                 $('#form .hideOn').fadeIn(500);
@@ -115,55 +113,12 @@ var starter = {
                 return false;
             });
 
-
-            /*
-            $('#i_want_more').click(function(){
-                $(this).addClass('hidden');
-                $('#form .hideOn').fadeIn(500);
-                return false;
+            $(document).on("click", "button.button-uploads", function () {
+                $(this).prev().find("input[type=file]").trigger("click");
             });
-            */
 
             $(document).on('click', '#form .submit', function(){
-                //ga('send', 'event', 'button', 'klikniecie', 'wyslij zgloszenie konkurs');
-                //ga('send', 'event', 'button', 'klikniecie', 'wyslij zgloszenie promocja');
-
-
-                if ( $('#form form#save').hasClass('promotion') ) {
-                    // ga('send', 'event', 'button', 'klikniecie', 'wyslij zgloszenie promocja', {
-                    //	hitCallback: function() {
-                    //	  $('#form form#save').submit();
-                    //	}
-                    // });
-                    //	ga('send', 'event', 'button', 'klikniecie', 'wyslij zgloszenie promocja');
-                    $('#form form#save').submit();
-                }
-
-                if ( $('#form form#save').hasClass('contest') ) {
-                    //ga('send', 'event', 'button', 'klikniecie', {
-                    //	hitCallback: function() {
-                    //	  $('#form form#save').submit();
-                    //	}
-                    //  });
-
-                    gtag('event', 'men_take_part_contest_button', {
-                        'klikniecie': 'wyslij zgloszenie konkurs',
-                        'event_callback': function() {
-                            $('#form form#save').submit();
-                        }
-                    });
-
-                    //ga('send', 'event', 'button', 'klikniecie', 'wyslij zgloszenie konkurs', {
-                    //	hitCallback: function() {
-                    //	  $('#form form#save').submit();
-                    //	}
-                    // });
-                    //	ga('send', 'event', 'button', 'klikniecie', 'wyslij zgloszenie konkurs');
-                }
-
-
-                //$('#form form#save').submit();
-
+                $('#form form#save').submit();
                 return false;
             });
 
@@ -337,9 +292,6 @@ var starter = {
                     var offset = Math.abs($(attri).position().top);
                     $('html, body').animate({scrollTop:offset}, 1000);
 
-                    //$('.menu-toggle').removeClass('active');
-                    //$('.menu-container').removeClass('active');
-
                     return false;
                 } else {
                     window.location.replace(url_home + $(this).attr("href"));
@@ -349,9 +301,297 @@ var starter = {
 
 
             $(document).on('click', '#getMoreItem', function(){
-                starter._var.filter["limit"] = starter._var.filter["limit"] + 10;
+                starter._var.filter["offset"] = starter._var.filter["offset"] + 10;
 
                 starter.main.get_apps();
+
+                return false;
+            });
+        },
+
+        onChange: function () {
+            $(document).on('change', '.input, .textarea, .checkbox', function () {
+                const item = $(this);
+                const value = $(this).val().trim();
+                const name = $(this).attr('name');
+
+                const valid = () => {
+                    switch (name) {
+                        case 'firstname':
+                            return starter.main.validator.isName(value, 'Imię');
+                        case 'lastname':
+                            return starter.main.validator.isName(value, 'Nazwisko');
+                        // case 'birthday':
+                        //     return starter.main.validator.isBirthday(value, 'Data urodzenia');
+                        case 'address':
+                            return starter.main.validator.isAddress(value, 'Ulica');
+                        case 'city':
+                            return starter.main.validator.isCity(value, 'Miasto');
+                        case 'zip':
+                            return starter.main.validator.isZip(value, 'Kod pocztowy');
+                        case 'email':
+                            return starter.main.validator.isEmail(value, 'Adres e-mail');
+                        case 'phone':
+                            return starter.main.validator.isPhone(value, 'Telefon');
+                        case 'receiptnb':
+                            return starter.main.validator.isReceiptNumber(value, 'Numer dowodu zakupu');
+                        case 'category':
+                            return starter.main.validator.isCategory(value, 'Kategoria');
+                        case 'product':
+                            return starter.main.validator.isProduct(value, 'Zakupiony produkt');
+                        case 'shop':
+                            return starter.main.validator.isShop(value, 'Rodzaj sklepu');
+                        case 'whence':
+                            return starter.main.validator.isWhere(value, 'Skąd dowiedziałeś się o promocji?');
+                        case 'legal_1':
+                            return starter.main.validator.isLegal(item);
+                        case 'legal_2':
+                            return starter.main.validator.isLegal(item);
+                        case 'legal_3':
+                            return starter.main.validator.isLegal(item);
+                        case 'legal_4':
+                            return starter.main.validator.isLegal(item);
+                    }
+                }
+
+                if (valid() !== true) {
+                    console.log('ERROR');
+                    $(`.error-${name}`).text(valid());
+                } else {
+                    $(`.error-${name}`).text('');
+                }
+
+            });
+
+            $(document).on("change", ".upload-file", function () {
+                const file = this.files[0];
+                const fieldId = $(this).attr('id');
+
+                const errorSpan = $(`.error-${fieldId}`);
+
+                errorSpan.text('');
+
+                if (file) {
+                    if (file.size <= 4 * 1024 * 1024) {
+                        const extension = file.name.split('.').pop().toLowerCase();
+                        if (['jpg', 'jpeg', 'png'].indexOf(extension) !== -1) {
+                            let reader = new FileReader();
+                            reader.onload = function (event) {
+                                $(`#${fieldId}_thumb`).attr('src', event.target.result).parent().removeClass('hidden').next().addClass('hidden');
+                            }
+                            reader.readAsDataURL(file);
+                        } else {
+                            // Wyświetlenie komunikatu o błędzie
+                            errorSpan.text('Można wybrać tylko pliki graficzne JPG, JPEG lub PNG');
+                            // Wyczyszczenie pola wyboru pliku
+                            $(this).val('');
+                        }
+                    } else {
+                        // Wyświetlenie komunikatu o błędzie
+                        errorSpan.text('Rozmiar pliku nie może przekraczać 4 MB');
+                        // Wyczyszczenie pola wyboru pliku
+                        $(this).val('');
+                    }
+                }
+            });
+        },
+
+        validator: {
+            isName: (value, name) => {
+                if (value === "") {
+                    return `Pole ${name} jest wymagane.`;
+                } else if (value.length < 3 || value.length > 128) {
+                    return `Pole ${name} musi mieć od 3 do 128 znaków.`;
+                } else if (!/^[\p{L}\s-]+$/u.test(value)) {
+                    return `Pole ${name} może zawierać tylko litery.`;
+                } else {
+                    return true;
+                }
+            },
+            // isBirthday: (value, name) => {
+            //     console.log('isBirthday');
+            // },
+            isAddress: (value, name) => {
+                if (value === "") {
+                    return `Pole ${name} jest wymagane.`;
+                } else if (value.length > 255) {
+                    return `Pole ${name} może mieć maksymalnie 255 znaków.`;
+                } else {
+                    return true;
+                }
+            },
+            isCity: (value, name) => {
+                if (value === "") {
+                    return `Pole ${name} jest wymagane.`;
+                } else if (value.length < 2 || value.length > 64) {
+                    return `Pole ${name} musi mieć od 2 do 64 znaków.`;
+                } else {
+                    return true;
+                }
+            },
+            isZip: (value, name) => {
+                if (value === "") {
+                    return `Pole ${name} jest wymagane.`;
+                } else if (!/^[0-9]{2}-[0-9]{3}$/.test(value)) {
+                    return 'Wprowadź poprawny kod pocztowy.';
+                } else {
+                    return true;
+                }
+            },
+            isPhone: (value, name) => {
+                if (value === "") {
+                    return `Pole ${name} jest wymagane.`;
+                } else if (!/^\+48(\s)?([1-9]\d{8}|[1-9]\d{2}\s\d{3}\s\d{3}|[1-9]\d{1}\s\d{3}\s\d{2}\s\d{2}|[1-9]\d{1}\s\d{2}\s\d{3}\s\d{2}|[1-9]\d{1}\s\d{2}\s\d{2}\s\d{3}|[1-9]\d{1}\s\d{4}\s\d{2}|[1-9]\d{2}\s\d{2}\s\d{2}\s\d{2}|[1-9]\d{2}\s\d{3}\s\d{2}|[1-9]\d{2}\s\d{4})$/.test(value)) {
+                    return 'Wprowadź poprawny numer telefonu.';
+                } else {
+                    return true;
+                }
+            },
+            isEmail: (value, name) => {
+                if (value === "") {
+                    return `Pole ${name} jest wymagane.`;
+                } else if (value.length > 255) {
+                    return `Pole ${name} może mieć maksymalnie 255 znaków.`;
+                } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+                    return 'Wprowadź poprawny adres email.';
+                } else {
+                    return true;
+                }
+            },
+            isCategory: (value, name) => {
+              if (value === "") {
+                  return `Pole ${name} jest wymagane.`;
+              } else if (isNaN(value) || parseInt(value) < 1 || parseInt(value) > 9) {
+                  return 'Wybierz kategorię.';
+              } else {
+                  return true;
+              }
+            },
+            isProduct: (value, name) => {
+                if (value === "") {
+                    return `Pole ${name} jest wymagane.`;
+                } else if (isNaN(value) || parseInt(value) < 1 || parseInt(value) > 93) {
+                    return 'Wybierz produkt.';
+                } else {
+                    return true;
+                }
+            },
+            isShop: (value, name) => {
+                if (value === "") {
+                    return `Pole ${name} jest wymagane.`;
+                } else if (isNaN(value) || parseInt(value) < 1 || parseInt(value) > 30) {
+                    return 'Wybierz rodzaj sklepu.';
+                } else {
+                    return true;
+                }
+            },
+            isReceiptNumber: (value, name) => {
+                if (value === "") {
+                    return `Pole ${name} jest wymagane.`;
+                } else if (value.length < 1 || value.length > 32) {
+                    return `Pole ${name} musi mieć od 1 do 32 znaków.`;
+                } else {
+                    return true;
+                }
+            },
+            isWhere: (value, name) => {
+                if (value === "") {
+                    return `Pole ${name} jest wymagane.`;
+                } else if (isNaN(value) || parseInt(value) < 1 || parseInt(value) > 7) {
+                    return 'Wybierz opcje.';
+                } else {
+                    return true;
+                }
+            },
+            isLegal: (item) => {
+                if (item.val() === "") {
+                    return `Pole jest wymagane.`;
+                } else if (!item.prop('checked')) {
+                    return `Pole jest wymagane.`;
+                } else {
+                    return true;
+                }
+            },
+        },
+
+        onSubmit: function () {
+            // $(document).on('submit', '#kontakt form', function () {
+            //     const fields = starter.getFields($(this).closest('form'));
+            //     const url = $(this).closest('form').attr('action');
+            //
+            //     axios({
+            //         method: 'post',
+            //         url: url,
+            //         headers: {
+            //             'content-type': 'multipart/form-data',
+            //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            //         },
+            //         data: fields,
+            //     }).then(function (response) {
+            //         $("#kontakt h2").html(response.data.results.message);
+            //         $("#kontakt #form").hide();
+            //     }).catch(function (error) {
+            //         $(`.error-post`).text('');
+            //         if (error.response) {
+            //             Object.keys(error.response.data.errors).map((item) => {
+            //                 $(`.error-${item}`).text(error.response.data.errors[item][0]);
+            //             });
+            //         } else if (error.request) {
+            //             // The request was made but no response was received
+            //             // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            //             // http.ClientRequest in node.js
+            //             console.log(error.request);
+            //         } else {
+            //             // Something happened in setting up the request that triggered an Error
+            //             console.log('Error', error.message);
+            //         }
+            //     });
+            //
+            //     return false;
+            // });
+
+            $(document).on('submit', '#form form', function () {
+                const fields = starter.getFields($(this).closest('form'));
+                const url = $(this).closest('form').attr('action');
+
+                console.log(fields);
+                console.log(url);
+
+                const formData = new FormData();
+
+                for (const field in fields) {
+                    formData.append(field, fields[field]);
+                }
+
+                console.log(formData.get('firstname'));
+
+                axios({
+                    method: 'post',
+                    url: url,
+                    headers: {
+                        'content-type': 'multipart/form-data',
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: formData,
+                }).then(function (response) {
+                    window.location = response.data.results.url;
+                    // console.log('response');
+                }).catch(function (error) {
+                    $(`.error-post`).text('');
+                    if (error.response) {
+                        Object.keys(error.response.data.errors).map((item) => {
+                            $(`.error-${item}`).text(error.response.data.errors[item][0]);
+                        });
+                    } else if (error.request) {
+                        // The request was made but no response was received
+                        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                        // http.ClientRequest in node.js
+                        console.log(error.request);
+                    } else {
+                        // Something happened in setting up the request that triggered an Error
+                        console.log('Error', error.message);
+                    }
+                });
 
                 return false;
             });
@@ -360,6 +600,8 @@ var starter = {
         keyup: function() {
             $(document).on('keyup', '#applications input#find', function( event ){
                 starter._var.filter["phrase"] = $('#applications input#find').val();
+                starter._var.filter["offset"] = 0;
+                $("#applications .items .item").remove();
 
                 starter.main.get_apps();
             });
@@ -383,40 +625,6 @@ var starter = {
             starter.effects.set_center_vertical( $('.popup .mCS_no_scrollbar #mCSB_1_container') );
 
             starter.effects.e404();
-
-            /*
-            //set owl
-            $('#topex, #topex .owl-slider .owl-stage, #topex .owl-slider .owl-item, #topex .owl-slider .slide').css( {"height": $(window).height() + 'px'} );
-
-            //set topex images
-            var astronaut_w = 429;
-            //var machine_w = 809;
-
-            $('#p_astronaut img').css( {"width": starter.main.set_size_image_topex(astronaut_w, 1200, $(window).width()) + 'px'} );
-            //$('#p_machine img').css( {"width": starter.main.set_size_image_topex(machine_w, 1200, $(window).width()) + 'px'} );
-
-            //set rules bg
-            if( $(window).width() > 1900 )
-                $('#rules').css( {"margin-top": -starter.main.setup_a_ratio(1900, 40, $(window).width()) + 'px'} );
-
-            starter.effects.matchMaxHeight();
-
-            starter.effects.setMinHeightSection();
-
-            starter.effects.set_center_in_container( $('section .container .identical h2.h2v') );
-            starter.effects.set_center_vertical( $('section .container .setVertical') );
-
-            starter.effects.set_height_404();
-
-            var popup = $('section.popup.popup-show');
-
-            if( popup.length > 0 )
-            {
-                starter.effects.set_scroll_container_popup( popup.find('.container-scroll') );
-                starter.effects.setMinHeightPopup();
-                starter.effects.set_center_vertical( $('section.popup .setVertical') );
-            }
-            */
         },
 
         error_scroll : function() {
@@ -429,33 +637,6 @@ var starter = {
 
         },
 
-        /*
-        set_size_image_topex: function(img_s, windows_s, windows_r) {
-            return img_s * windows_r / windows_s;
-        },
-
-        setup_a_ratio: function(a, b, c) {
-            return c * b / a;
-        },
-        */
-
-        //horizontal to vertical
-        /*
-        h2v: function() {
-            $('.h2v').each(function(){
-
-                var text = $(this).text();
-                var temp = '';
-
-                $.each(text.split(''), function( index, value ) {
-                    temp += value + "\n";
-                });
-
-                $(this).text('').append( $('<pre>').text(temp) );
-
-            });
-        },
-        */
         datapicker: function() {
 
         },
@@ -467,42 +648,47 @@ var starter = {
                     onOpen: function (inst) {
                         $('select#where option').removeAttr('selected');
                         $('#sbHolder_' + inst.uid).addClass('focus');
-                        console.log(inst);
                     },
                     onClose: function (inst) {
-                        console.log('onClose');
                         $('#sbHolder_' + inst.uid).removeClass('focus');
                     },
                     onChange: function (val, inst) {
-                        console.log('val : ' + val);
-                        console.log(inst);
                         if( inst.id == 'category' )
                         {
-                            $.ajax(
-                                {
-                                    url: '/formularz/pobierz-produkty/',
-                                    dataType: "json",
-                                    data: 	{ id: val },
-                                    type: "POST",
-                                    async: false,
-                                    success: function( json )
+                            if ( val > 0) {
+                                $.ajax(
                                     {
-                                        $('select#product option').remove();
+                                        url: '/api/product/category/' + val,
+                                        dataType: "json",
+                                        type: "GET",
+                                        async: false,
+                                        success: function( json )
+                                        {
+                                            $('select#product option').remove();
 
-                                        $.each( json.parameters, function(key, value) {
-                                            var option = $('<option>').attr('label', value).attr('value', key).text(value);
+                                            let option = $('<option>').attr('label', 'Produkt').text('Produkt');
                                             option.appendTo( "select#product" );
-                                        });
 
-                                        $("select#product").selectbox("detach");
+                                            $.each( json.rows, function(key, value) {
+                                                let option = $('<option>').attr('label', value.name).attr('value', value.id).text(value.name);
+                                                option.appendTo( "select#product" );
+                                            });
 
-                                        starter.main.selectbox( $("select#product") );
-                                    },
-                                    error: function(x, t, m)
-                                    {
-                                        console.log('ajax error');
-                                    }
-                                });
+                                            $("select#product").selectbox("detach");
+
+                                            starter.main.selectbox( $("select#product") );
+                                            $(`.error-category`).text('');
+                                        },
+                                        error: function(x, t, m)
+                                        {
+                                            console.log('ajax error');
+                                        }
+                                    });
+                            } else {
+                                $(`.error-category`).text('Wybierz kategorię.');
+
+                            }
+
                         }
                     },
                     effect: "slide"
@@ -511,36 +697,31 @@ var starter = {
         },
 
         get_apps: function () {
-            $.ajax(
-                {
-                    url: '/pobierz/',
-                    dataType: "json",
-                    data: 	{
-                        phrase: starter._var.filter["phrase"],
-                        order: starter._var.filter["order"],
-                        sort: starter._var.filter["sort"],
-                        limit: starter._var.filter["limit"],
-                        offset: starter._var.filter["offset"],
-                    },
-                    type: "POST",
-                    async: false,
-                    beforeSend: function() {
-                        $('#applications .items .item').remove();
-                    },
-                    success: function( json )
-                    {
-                        $.each( json.parameters, function(key, value) {
-                            starter.effects.createApp( key , value );
-                        });
-                        //starter.effects.matchMaxHeight();
-                    },
-                    error: function(x, t, m)
-                    {
-                        console.log('ajax error');
-                    }
+            axios({
+                method: 'post',
+                url: '/api/contest/verified',
+                data: 	{
+                    phrase: starter._var.filter["phrase"],
+                    order: starter._var.filter["order"],
+                    sort: starter._var.filter["sort"],
+                    limit: starter._var.filter["limit"],
+                    offset: starter._var.filter["offset"],
+                },
+            }).then(function (response) {
+                $.each(response.data.rows, function (key, value) {
+                    starter.effects.createApp(key, value);
                 });
-
-            console.log( starter._var.filter );
+            }).catch(function (error) {
+                if (error.request) {
+                    // The request was made but no response was received
+                    // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                    // http.ClientRequest in node.js
+                    console.log(error.request);
+                } else {
+                    // Something happened in setting up the request that triggered an Error
+                    console.log('Error', error.message);
+                }
+            });
         },
 
         scroller: function() {
@@ -579,69 +760,6 @@ var starter = {
 
         upload: function( type ) {
 
-            switch(type)
-            {
-                case 'receipt':
-                    name = 'Wgraj zdjęcie paragonu';
-                    break;
-                case 'ean':
-                    name = 'Wgraj zdjęcie kodu EAN <strong style="color:#e41e13;">wyciętego</strong> z opakowania produktu';
-                    break;
-                case 'tip':
-                    name = 'Dodaj zdjęcie (max 2MB)';
-                    break;
-            }
-
-            if( $("#fileuploader"+type).length )
-            {
-                starter._var.upload_obj = $("#fileuploader"+type).uploadFile({
-                    url:					url_home + "/upload/typ,"+type,
-                    returnType:				"json",
-                    multiple:				false,
-                    fileName:				"photo",
-                    autoSubmit:				true,
-                    maxFileSize:			1024*1024*4,
-                    maxFileCount:			10,
-                    dragDrop:				false,
-                    multiDragErrorStr: 		"To działanie jest niedostepne.",
-                    sizeErrorStr:			"jest za ciężki. Maksymalna waga pliku to ",
-                    allowedTypes:			"png,gif,jpg,jpeg",
-                    uploadStr:				"" + ((name != 'porady')?name:''),
-                    showAbort: 				false,
-                    onLoad: 				function (obj) {},
-                    onSelect: 				function (files) {
-                        $('#form .uploads-' + type + ' + span.error-post').text('');
-                    },
-                    onSubmit:				function(files){},
-                    onSuccess:				function(files,json,xhr,pd) {
-                        if ( json.isSuccess )
-                        {
-                            $('#form .uploads-' + type + ' .ajax-file-upload-progress').hide();
-                            $('#form .uploads-' + type + '').css({'background-image': 'url("/static/uploads/' + type + '/750x750-' + json.parameters.file + '")'});
-                            $('#form .uploads-' + type + ' #img_' + type).val( json.parameters.file );
-                            $('#form .uploads-' + type + ' #fileuploader' + type).remove();
-                            $('#form .uploads-' + type + ' + span.error-post').text('');
-
-                            $('#form .uploads-' + type).parent().next().text( '' );
-                        } else {
-                            console.log('ERROR');
-                            $('#form .uploads-' + type).parent().addClass('error');
-
-                            console.log();
-
-                            $('#form .uploads-' + type).parent().next().text( json.parameters.post['img_' + type] );
-                            //$('#form .uploads-' + type + ' + span.error-post').text('erro'); //json.parameters.post['img_' + type]
-                        }
-                    },
-                    beforeUploadAll: 		function(){},
-                    onError: 				function(files,status,errMsg,pd) {
-                        //console.log(errMsg);
-                        $('#form .uploads-' + type + ' + span.error-post').text(errMsg);
-                    },
-                    onCancel: 				function (files, pd) {},
-                    onAbort: 				function (files, pd) {},
-                });
-            }
         },
 
         owl: function() {},
@@ -700,14 +818,6 @@ var starter = {
 
                     event.preventDefault();
                     history.pushState(null,null,pathname);
-                    /*
-                    if( section == '#partner' || section == '#contact' )
-                    {
-                        $('.menu-left').addClass('negative');
-                    } else {
-                        $('.menu-left').removeClass('negative');
-                    }
-                    */
                 }
             }
         },
@@ -732,6 +842,39 @@ var starter = {
                 return false;
             }
         },
+    },
+
+    getFields: function ($form) {
+        const inputs = $form.find('.input');
+        const textareas = $form.find('.textarea');
+        const checkboxes = $form.find('.checkbox');
+        const files = $form.find('.file');
+
+        const fields = {};
+
+        $.each(inputs, function (index, item) {
+            fields[$(item).attr('name')] = $(item).val();
+        });
+
+        $.each(textareas, function (index, item) {
+            fields[$(item).attr('name')] = $(item).val();
+        });
+
+        $.each(checkboxes, function (index, item) {
+            if ($(item).prop('checked')) {
+                fields[$(item).attr('name')] = $(item).val();
+            }
+        });
+
+        $.each(files, function (index, item) {
+            if (item.files[0]) {
+                fields[$(item).attr('name')] = item.files[0];
+            }
+        })
+
+        fields['_token'] = $form.find('input[name=_token]').val();
+
+        return fields;
     },
 
     listTipsRender: {
@@ -809,27 +952,15 @@ var starter = {
 
     datepicker: {
         init: function() {
-            if( $('input#birthday').length ) {
-                $('#birthday').datetimepicker({
+            if ($('input#birthday').length) {
+                $('input#birthday').datetimepicker({
                     format: 'DD-MM-YYYY',
                     inline: true,
-                    locale: 'pl'
+                    locale: 'pl',
+                    maxDate: moment().subtract(18, 'years')
                 });
                 $('input#firstname').focus();
-
-                var today = new Date();
-                var dd = today.getDate();
-                var mm = today.getMonth()+1; //January is 0!
-                var yyyy = today.getFullYear();
-
-                if( dd > 9)
-                    today_string = dd + '-' + mm + '-' + yyyy;
-                else
-                    today_string = '0' + dd + '-' + mm + '-' + yyyy;
-
-                if( today_string == $('#birthday').val() )
-                    $('#birthday').val('');
-            };
+            }
         }
     },
 
@@ -867,21 +998,20 @@ var starter = {
             var item = $('<div>').addClass('col-xs-12 col-sm-6 col-md-4 col-lg-5ths item');
             var application = $('<div>').addClass('application');
 
-            if( value.fotoimg ) {
-                var image = $('<div>').addClass('image').attr('style', "background-image : url('" + url_home  + "/static/uploads/tip/455x455-" + value.fotoimg + "');");
+            if( value.img_tip ) {
+                var image = $('<div>').addClass('image').attr('style', "background-image : url('/storage/" + value.img_tip + "');");
                 image.appendTo( application );
             } else if( value.video_url ) {
-                if( value.video_type == 1 ) {
-                    var video = $('<div>').addClass('video youtube').attr('style', "background-image: url('https://img.youtube.com/vi/" + value.video_image_id + "/default.jpg');");
-                } else if( value.video_type == 2 ) {
-                    var video = $('<div>').addClass('video vimeo').attr('style', "background-image: url('https://i.vimeocdn.com/video/" + value.video_image_id + "_640.jpg');");
-                } else if( value.video_type == 3 ) {
-                    var video = $('<div>').addClass('video facebook').attr('style', "background-image: url('https://graph.facebook.com/" + value.video_image_id + "/picture');");
+                if( value.video_type == 'youtube' ) {
+                    var video = $('<div>').addClass('video youtube').attr('style', "background-image: url('" + value.video_image_id + "');");
+                } else if( value.video_type == 'vimeo' ) {
+                    var video = $('<div>').addClass('video vimeo').attr('style', "background-image: url('" + value.video_image_id + "');");
                 }
+
                 video.appendTo( application );
             }
 
-            var a = $('<a>').attr('title',value.title).attr('href',url_home + '/zgloszenie/id,' + value.id);
+            var a = $('<a>').attr('title',value.title).attr('href','/zgloszenia/' + value.id);
             var c_table = $('<div>').addClass('c-table');
             var c_row = $('<div>').addClass('c-row');
             var c_cell = $('<div>').addClass('c-cell').text('zobacz');
@@ -892,9 +1022,6 @@ var starter = {
 
             var span = $('<span>').text(value.firstname + ' ' + value.lastname);
             span.appendTo( application );
-
-            //var fb = $('<a>').addClass('fb').attr('href', 'https://www.facebook.com/sharer/sharer.php?u=' + url_home + '/zgloszenie/id,' + value.id);
-            //fb.appendTo( application );
 
             application.appendTo( item );
             item.appendTo( "#applications .items" );
