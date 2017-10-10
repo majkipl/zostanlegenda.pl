@@ -16,6 +16,7 @@
 //});
 
 use App\Http\Controllers\ConfirmController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ContestController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PolicyController;
@@ -47,10 +48,9 @@ Route::get('/promocja/potwierdzam/{promotion}/{token}', [ConfirmController::clas
 Route::get('/konkurs/potwierdzam/{contest}/{token}', [ConfirmController::class, 'contest'])->name('front.confirm.contest');
 
 Route::get('/zgloszenia/{contest}', [ContestController::class, 'show'])->name('front.application.id');
+Route::post('/kontakt/wyslij', [ContactController::class, 'send'])->name('front.contact.send');
 
-
-
-
+//----------------------------------
 
 Route::get('/formularz/pobierz-produkty', 'HomeController@index')->name('front.get.products');
 
