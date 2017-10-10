@@ -2,7 +2,6 @@
 
 /** @var Factory $factory */
 
-use App\Model;
 use App\Models\Contest;
 use App\Models\Whence;
 use Faker\Generator as Faker;
