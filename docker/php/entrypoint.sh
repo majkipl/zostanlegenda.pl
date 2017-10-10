@@ -16,14 +16,14 @@ n 8.6.0
 npm install
 npm run build
 
-#php artisan key:generate            # generujemy klucz
-#php artisan migrate:fresh --seed    # robimy migracje wraz z seed'ami #
-#php artisan cache:clear             # czyścimy cache
-#php artisan config:clear            # czyścimy konfiguracje
-#php artisan route:clear             # czyścimy routing
-#
-#cd public
-#ln -sf ../storage/app/public/ storage
+php artisan key:generate            # generujemy klucz
+php artisan migrate:fresh --seed    # robimy migracje wraz z seed'ami #
+php artisan cache:clear             # czyścimy cache
+php artisan config:clear            # czyścimy konfiguracje
+php artisan route:clear             # czyścimy routing
+
+cd public
+ln -sf ../storage/app/ storage
 
 # utrzymuje kontener przy życiu - nie zamyka apache
 # wyświetla logi apacha
