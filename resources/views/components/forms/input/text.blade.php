@@ -9,7 +9,11 @@
            @if($max)
                maxlength="{{ $max }}"
            @endif
-           class="input"
+           @isset($class)
+               class="{{ $class }}"
+           @else
+               class="input"
+           @endisset
            autocomplete="off"/>
 </div>
 <span class="error-post error-{{ $name }}">{{ $error }}</span>

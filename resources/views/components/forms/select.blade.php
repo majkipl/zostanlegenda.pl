@@ -7,7 +7,9 @@
     >
         <option value="0" selected>{{ $placeholder }}</option>
         @foreach($items as $item)
-            <option value="{{ $item->id }}">{{ $item->name }}</option>
+            <option value="{{ $item->id }}" {{ isset($selected) && $selected === $item->id ? 'selected' : '' }}>
+                {{ $item->name }}
+            </option>
         @endforeach
     </select>
 </div>
