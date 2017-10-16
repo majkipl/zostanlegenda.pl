@@ -9,6 +9,16 @@ class Whence extends Model
 {
     protected $fillable = ['id', 'name'];
 
+    public function promotions()
+    {
+        return $this->hasMany(Promotion::class);
+    }
+
+    public function contests()
+    {
+        return $this->hasMany(Contest::class);
+    }
+
     /**
      * @return mixed
      */

@@ -23,8 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        //todo: pobrać liste potwierdzonych aplikacji
-
+        // todo: co z nagrodami tygodnia?
         return view('home/index', [
             'isEndPromotion' => false,
             'isEndContest' => false,
