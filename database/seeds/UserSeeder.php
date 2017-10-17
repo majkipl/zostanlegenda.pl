@@ -23,7 +23,8 @@ class UserSeeder extends Seeder
             'role' => UserRole::ADMIN,
             'email_verified_at' => now(),
             'password' => Hash::make('asd123'), // password
-            'remember_token' => Str::random(10)
+            'remember_token' => Str::random(10),
+            'api_token' => Str::random(60),
         ];
 
         User::insert($data);

@@ -32,7 +32,7 @@
                             'required' => true,
                             'error' => '',
                             'items' => $categories,
-                            'selected' => $product->category->id
+                            'selected' => isset($product) ? $product->category->id : 0
                         ])
                         @endcomponent
                     </div>

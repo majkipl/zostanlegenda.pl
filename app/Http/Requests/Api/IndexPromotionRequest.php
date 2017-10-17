@@ -27,8 +27,24 @@ class IndexPromotionRequest extends FormRequest
             'searchable.*' => 'in:id,firstname,lastname,birthday,email,phone,address,city,zip,img_receipt,receiptnb,img_ean,category.name,product.name,shop.name,whence.name,created_at,legal_1,legal_2,legal_3,legal_4',
             'offset' => 'nullable|integer|min:0',
             'limit' => 'nullable|integer|min:1|max:100',
-            'filter' => 'nullable|json'
+            'filter' => 'nullable|json',
+            'sort' => 'nullable|in:id,name,slug',
+            'order' => 'nullable|in:asc,desc',
+            'search' => 'nullable'
         ];
+    }
+
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            if (empty($this->input('sort'))) {
+                $this->merge(['sort' => 'id']); // Domyślna kolumna sortowania
+            }
+
+            if (empty($this->input('order'))) {
+                $this->merge(['order' => 'asc']); // Domyślny kierunek sortowania
+            }
+        });
     }
 
     public function messages(): array

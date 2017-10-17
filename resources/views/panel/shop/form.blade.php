@@ -13,15 +13,15 @@
                 @csrf
                 <div class="row">
                     <div class="col-xs-12 col-sm-6 col-sm-offset-3">
-                    @component('components.forms.input.text', [
-                        'name' => 'name',
-                        'value' => isset($shop) ? $shop->name : '',
-                        'placeholder' => 'Nazwa',
-                        'required' => true,
-                        'max' => 128,
-                        'error' => '',
-                        ])
-                    @endcomponent
+                        @component('components.forms.input.text', [
+                            'name' => 'name',
+                            'value' => isset($shop) ? $shop->name : '',
+                            'placeholder' => 'Nazwa',
+                            'required' => true,
+                            'max' => 128,
+                            'error' => '',
+                            ])
+                        @endcomponent
                     </div>
 
                     <div class="col-12 col-lg-10 col-lg-offset-1 text-center">

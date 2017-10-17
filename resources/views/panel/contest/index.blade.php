@@ -29,6 +29,7 @@
                     data-sortable="true"
                     data-toggle="table"
                     data-url="{{ route('api.contest') }}"
+                    data-ajax="btAjax"
                 >
                     <thead>
                     <tr>
@@ -231,6 +232,8 @@
                     <tbody>
                     </tbody>
                 </table>
+
+                @include('panel.common.btajax')
 
                 <script>
                     window.customSearchFormatter = function (value, searchText) {

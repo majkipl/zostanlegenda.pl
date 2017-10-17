@@ -30,6 +30,7 @@
                     data-sortable="true"
                     data-toggle="table"
                     data-url="{{ route('api.shop') }}"
+                    data-ajax="btAjax"
                 >
                     <thead>
                     <tr>
@@ -64,6 +65,8 @@
                     <tbody>
                     </tbody>
                 </table>
+
+                @include('panel.common.btajax')
 
                 <script>
                     window.customSearchFormatter = function (value, searchText) {

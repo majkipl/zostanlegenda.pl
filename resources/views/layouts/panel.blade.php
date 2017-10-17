@@ -30,6 +30,8 @@
     <main class="padding-top-4 padding-bottom-4">
         @yield('content')
     </main>
+
+    @include('panel.common.token')
 </div>
 
 <script src="https://unpkg.com/jquery@3.6.4/dist/jquery.min.js"></script>

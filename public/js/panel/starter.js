@@ -8,8 +8,6 @@ const starter = {
         starter.onSubmit();
         starter.onInput();
         starter.formStyled();
-
-        console.log('STARTER INIT');
     },
 
     onChange: function () {
@@ -29,6 +27,7 @@ const starter = {
             const headers = {
                 'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                'Authorization': 'Bearer ' + token
             };
 
             if (method === 'PUT' || method === 'DELETE') {
@@ -46,10 +45,7 @@ const starter = {
                 }).catch(function (error) {
                     $(`.error-post`).text('');
                     if (error.response) {
-
-                        Object.keys(error.response.data.errors).map((item) => {
-                            $(`.error-${item}`).text(error.response.data.errors[item][0]);
-                        });
+                        alert(error.response.statusText);
                     } else if (error.request) {
                         // The request was made but no response was received
                         // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
@@ -74,6 +70,7 @@ const starter = {
             const headers = {
                 'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                'Authorization': 'Bearer ' + token
             };
 
             if (method === 'PUT' || method === 'DELETE') {
@@ -123,8 +120,8 @@ const starter = {
 
         $(".textarea:not(:empty)").addClass("has-value");
 
-        $("select.input.select").each(function( index, element ) {
-            $(element).find('option').each(function() {
+        $("select.input.select").each(function (index, element) {
+            $(element).find('option').each(function () {
                 if ($(this).is(':selected') && $(this).is('[value]') && $(this).attr('value') !== '') {
                     $(element).addClass('has-value');
                 }
@@ -165,7 +162,6 @@ const starter = {
 
         return fields;
     },
-
 }
 
 $(window).on("load", function (e) {
