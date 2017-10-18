@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Promotion extends Model
 {
@@ -14,36 +15,62 @@ class Promotion extends Model
         'legal_3', 'legal_4', 'category_id', 'product_id',
         'shop_id', 'whence_id', 'token'];
 
-    public function shop()
+    /**
+     * @return BelongsTo
+     */
+    public function shop(): BelongsTo
     {
         return $this->belongsTo(Shop::class);
     }
 
-    public function category()
+    /**
+     * @return BelongsTo
+     */
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
 
-    public function product()
+    /**
+     * @return BelongsTo
+     */
+    public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
     }
 
-    public function whence()
+    /**
+     * @return BelongsTo
+     */
+    public function whence(): BelongsTo
     {
         return $this->belongsTo(Whence::class);
     }
 
+    /**
+     * @param $value
+     * @return void
+     */
     public function setBirthdayAttribute($value)
     {
         $this->attributes['birthday'] = Carbon::createFromFormat('d-m-Y', $value)->format('Y-m-d');
     }
 
-    public function getBirthdayAttribute($value)
+    /**
+     * @param $value
+     * @return string
+     */
+    public function getBirthdayAttribute($value): string
     {
         return Carbon::createFromFormat('Y-m-d', $value)->format('d-m-Y');
     }
 
+    /**
+     * @param $query
+     * @param $search
+     * @param $searchable
+     * @return mixed
+     */
     public function scopeSearch($query, $search, $searchable)
     {
         if ($search && $searchable) {
@@ -86,10 +113,6 @@ class Promotion extends Model
                                 $subQuery->where('name', 'like', '%' . $search . '%');
                             });
                             break;
-//                        case 'legal_1':
-//                        case 'legal_2':
-//                        case 'legal_3':
-//                        case 'legal_4':
                     }
                 }
             });
@@ -98,6 +121,11 @@ class Promotion extends Model
         return $query;
     }
 
+    /**
+     * @param $query
+     * @param $filter
+     * @return mixed
+     */
     public function scopeFilter($query, $filter)
     {
         if ($filter) {
@@ -141,10 +169,6 @@ class Promotion extends Model
                             $subQuery->where('name', 'like', '%' . $value . '%');
                         });
                         break;
-//                  case 'legal_1':
-//                  case 'legal_2':
-//                  case 'legal_3':
-//                  case 'legal_4':
                 }
             }
         }

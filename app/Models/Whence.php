@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Cache;
 
 class Whence extends Model
@@ -14,7 +15,10 @@ class Whence extends Model
         return $this->hasMany(Promotion::class);
     }
 
-    public function contests()
+    /**
+     * @return HasMany
+     */
+    public function contests(): HasMany
     {
         return $this->hasMany(Contest::class);
     }

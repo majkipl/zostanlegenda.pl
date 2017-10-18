@@ -8,7 +8,12 @@ use Illuminate\Support\Str;
 
 class SlugService
 {
-    public function generateUniqueSlug($name, $existingSlug = null)
+    /**
+     * @param $name
+     * @param $existingSlug
+     * @return string
+     */
+    public function generateUniqueSlug($name, $existingSlug = null): string
     {
         $baseSlug = Str::slug($name);
         $slug = $baseSlug;
@@ -21,7 +26,13 @@ class SlugService
 
         return $slug;
     }
-    public function slugExists($slug, $existingSlug = null)
+
+    /**
+     * @param $slug
+     * @param $existingSlug
+     * @return bool
+     */
+    public function slugExists($slug, $existingSlug = null): bool
     {
         $query = DB::table('categories')->where('slug', $slug);
 

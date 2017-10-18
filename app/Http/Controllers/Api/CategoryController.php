@@ -23,7 +23,11 @@ class CategoryController extends Controller
         $this->slugService = $slugService;
     }
 
-    public function index(IndexCategoryRequest $request)
+    /**
+     * @param IndexCategoryRequest $request
+     * @return JsonResponse
+     */
+    public function index(IndexCategoryRequest $request): JsonResponse
     {
         $search = $request->input('search');
         $offset = $request->input('offset', 0);
@@ -44,7 +48,11 @@ class CategoryController extends Controller
         ], Response::HTTP_OK);
     }
 
-    public function add(AddCategoryRequest $request)
+    /**
+     * @param AddCategoryRequest $request
+     * @return JsonResponse
+     */
+    public function add(AddCategoryRequest $request): JsonResponse
     {
         DB::beginTransaction();
 
@@ -90,7 +98,11 @@ class CategoryController extends Controller
         }
     }
 
-    public function update(UpdateCategoryRequest $request)
+    /**
+     * @param UpdateCategoryRequest $request
+     * @return JsonResponse
+     */
+    public function update(UpdateCategoryRequest $request): JsonResponse
     {
         DB::beginTransaction();
 
@@ -138,16 +150,22 @@ class CategoryController extends Controller
         }
     }
 
+    /**
+     * @param Category $category
+     * @return JsonResponse
+     */
     public function delete(Category $category): JsonResponse
     {
         DB::beginTransaction();
 
         try {
+            $categoryId  = $category->slug;
             $category->delete();
 
             DB::commit();
 
             Cache::forget('categories');
+            Cache::forget('products_by_' . $categoryId);
 
             return response()->json(
                 [

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Cache;
 
 class Product extends Model
@@ -32,11 +33,20 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function promotions()
+    /**
+     * @return HasMany
+     */
+    public function promotions(): HasMany
     {
         return $this->hasMany(Promotion::class);
     }
 
+    /**
+     * @param $query
+     * @param $search
+     * @param $searchable
+     * @return mixed
+     */
     public function scopeSearch($query, $search, $searchable)
     {
         if ($search && $searchable) {
@@ -62,6 +72,11 @@ class Product extends Model
         return $query;
     }
 
+    /**
+     * @param $query
+     * @param $filter
+     * @return mixed
+     */
     public function scopeFilter($query, $filter)
     {
         if ($filter) {

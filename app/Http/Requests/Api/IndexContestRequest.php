@@ -33,6 +33,10 @@ class IndexContestRequest extends FormRequest
         ];
     }
 
+    /**
+     * @param $validator
+     * @return void
+     */
     public function withValidator($validator)
     {
         $validator->after(function ($validator) {
@@ -46,6 +50,9 @@ class IndexContestRequest extends FormRequest
         });
     }
 
+    /**
+     * @return array
+     */
     public function messages(): array
     {
         return [

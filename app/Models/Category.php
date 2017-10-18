@@ -32,7 +32,10 @@ class Category extends Model
         return $this->hasMany(Product::class);
     }
 
-    public function promotions()
+    /**
+     * @return HasMany
+     */
+    public function promotions(): HasMany
     {
         return $this->hasMany(Promotion::class);
     }
@@ -43,7 +46,6 @@ class Category extends Model
      * @param $searchable
      * @return mixed
      */
-
     public function scopeSearch($query, $search, $searchable)
     {
         if ($search && $searchable) {

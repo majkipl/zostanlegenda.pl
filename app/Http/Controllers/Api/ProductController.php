@@ -17,6 +17,10 @@ use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
+    /**
+     * @param IndexProductRequest $request
+     * @return JsonResponse
+     */
     public function index(IndexProductRequest $request): JsonResponse
     {
         $search = $request->input('search');
@@ -38,6 +42,10 @@ class ProductController extends Controller
         ], Response::HTTP_OK);
     }
 
+    /**
+     * @param AddProductRequest $request
+     * @return JsonResponse
+     */
     public function add(AddProductRequest $request)
     {
         DB::beginTransaction();
@@ -53,6 +61,7 @@ class ProductController extends Controller
             DB::commit();
 
             Cache::forget('products');
+            Cache::forget('products_by_' . $params['category_id']);
 
             return response()->json(
                 [
@@ -79,12 +88,21 @@ class ProductController extends Controller
             );
         }
     }
+
+    /**
+     * @param UpdateProductRequest $request
+     * @return JsonResponse
+     */
     public function update(UpdateProductRequest $request)
     {
         DB::beginTransaction();
 
         try {
             $product = Product::findOrFail($request->input('id'));
+
+            $oldCategoryId = $product->category_id;
+            $newCategoryId = $request->input('category_id');
+
             $product->fill($request->validated());
 
             $product->save();
@@ -92,6 +110,8 @@ class ProductController extends Controller
             DB::commit();
 
             Cache::forget('products');
+            Cache::forget('products_by_' . $oldCategoryId);
+            Cache::forget('products_by_' . $newCategoryId);
 
             return response()->json(
                 [
@@ -119,16 +139,23 @@ class ProductController extends Controller
         }
     }
 
+    /**
+     * @param Product $product
+     * @return JsonResponse
+     */
     public function delete(Product $product): JsonResponse
     {
         DB::beginTransaction();
 
         try {
+            $categoryId = $product->category_id;
+
             $product->delete();
 
             DB::commit();
 
             Cache::forget('products');
+            Cache::forget('products_by_' . $categoryId);
 
             return response()->json(
                 [
@@ -156,13 +183,17 @@ class ProductController extends Controller
 
     public function category(Category $category)
     {
-        // todo: tu dać cacheowanie
+        $cacheKey = 'products_by_' . $category->id;
 
-        $products = $category->products()->select(['id', 'name']);
+        $productsByCategory = Cache::remember($cacheKey, now()->addDay(365), function () use ($category) {
+            $products = $category->products()->select(['id', 'name']);
 
-        return response()->json([
-            'total' => $products->count(),
-            'rows' => $products->get()->toArray()
-        ], Response::HTTP_OK);
+            return [
+                'total' => $products->count(),
+                'rows' => $products->get()->toArray()
+            ];
+        });
+
+        return response()->json($productsByCategory, Response::HTTP_OK);
     }
 }

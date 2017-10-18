@@ -21,6 +21,12 @@ class ContestService
         $this->videoService = new VideoService();
     }
 
+    /**
+     * @param array $data
+     * @param StoreContestRequest $request
+     * @return Contest
+     * @throws Exception
+     */
     public function store(array $data, StoreContestRequest $request): Contest
     {
         DB::beginTransaction();

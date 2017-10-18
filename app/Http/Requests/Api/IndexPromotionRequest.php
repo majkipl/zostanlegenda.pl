@@ -20,7 +20,10 @@ class IndexPromotionRequest extends FormRequest
         return true;
     }
 
-    public function rules()
+    /**
+     * @return string[]
+     */
+    public function rules(): array
     {
         return [
             'searchable' => 'required|array',
@@ -34,6 +37,10 @@ class IndexPromotionRequest extends FormRequest
         ];
     }
 
+    /**
+     * @param $validator
+     * @return void
+     */
     public function withValidator($validator)
     {
         $validator->after(function ($validator) {
@@ -47,6 +54,9 @@ class IndexPromotionRequest extends FormRequest
         });
     }
 
+    /**
+     * @return array
+     */
     public function messages(): array
     {
         return [

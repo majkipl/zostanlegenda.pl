@@ -31,7 +31,10 @@ class UpdateShopRequest extends FormRequest
         return $rules;
     }
 
-    public function messages()
+    /**
+     * @return string[]
+     */
+    public function messages(): array
     {
         return [
             'required' => 'Pole jest wymagane.',

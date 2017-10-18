@@ -13,6 +13,12 @@ use Illuminate\Support\Str;
 class PromotionService
 {
 
+    /**
+     * @param array $data
+     * @param StorePromotionRequest $request
+     * @return Promotion
+     * @throws Exception
+     */
     public function store(array $data, StorePromotionRequest $request): Promotion
     {
         DB::beginTransaction();
