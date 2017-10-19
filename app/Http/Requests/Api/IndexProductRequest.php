@@ -33,7 +33,7 @@ class IndexProductRequest extends FormRequest
             'offset' => 'nullable|integer|min:0',
             'limit' => 'nullable|integer|min:1|max:100',
             'filter' => 'nullable|json',
-            'sort' => 'nullable|in:id,name,slug',
+            'sort' => 'nullable|in:id,name,code,category.name',
             'order' => 'nullable|in:asc,desc',
             'search' => 'nullable'
         ];

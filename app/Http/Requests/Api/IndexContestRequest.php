@@ -27,7 +27,7 @@ class IndexContestRequest extends FormRequest
             'offset' => 'nullable|integer|min:0',
             'limit' => 'nullable|integer|min:1|max:100',
             'filter' => 'nullable|json',
-            'sort' => 'nullable|in:id,name,slug',
+            'sort' => 'nullable|in:id,firstname,lastname,birthday,email,title,message,img_tip,video_url,video_type,video_id,video_image_id,whence.name,legal_1,legal_2,legal_3,legal_4',
             'order' => 'nullable|in:asc,desc',
             'search' => 'nullable'
         ];

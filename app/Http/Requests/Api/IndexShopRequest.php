@@ -18,22 +18,6 @@ class IndexShopRequest extends FormRequest
     {
         return true;
     }
-//    public function all($keys = null)
-//    {
-//        $data = parent::all($keys);
-//
-//        // Jeśli parametr sort nie jest ustawiony lub jest pusty, ustaw domyślną wartość
-//        if (!isset($data['sort']) || empty($data['sort'])) {
-//            $data['sort'] = 'id'; // Ustaw tu swoją domyślną wartość dla sortowania
-//        }
-//
-//        // Jeśli parametr order nie jest ustawiony lub jest pusty, ustaw domyślną wartość
-//        if (!isset($data['order']) || empty($data['order'])) {
-//            $data['order'] = 'asc'; // Ustaw tu swoją domyślną wartość dla kierunku sortowania
-//        }
-//
-//        return $data;
-//    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -44,7 +28,7 @@ class IndexShopRequest extends FormRequest
     {
         return [
             'searchable' => 'required|array',
-            'searchable.*' => 'in:id,name,slug',
+            'searchable.*' => 'in:id,name',
             'offset' => 'nullable|integer|min:0',
             'limit' => 'nullable|integer|min:1|max:100',
             'filter' => 'nullable|json',
