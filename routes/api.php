@@ -26,17 +26,18 @@ Route::post('/contest/verified', [ContestController::class, 'verified'])->name('
 Route::get('/product', [ProductController::class, 'index'])->name('api.products');
 Route::get('/product/category/{category}', [ProductController::class, 'category'])->name('api.products.category');
 
-Route::post('/product', [ProductController::class, 'add'])->name('api.product.add');
-Route::put('/product', [ProductController::class, 'update'])->name('api.product.update');
-Route::delete('/product/{product}', [ProductController::class, 'delete'])->name('api.product.delete');
 
-Route::middleware(['auth:api'])->group(function () {
+
+Route::middleware(['api'])->group(function () {
     Route::get('/category', [CategoryController::class, 'index'])->name('api.category');
     Route::post('/category', [CategoryController::class, 'add'])->name('api.category.add');
     Route::put('/category', [CategoryController::class, 'update'])->name('api.category.update');
     Route::delete('/category/{category}', [CategoryController::class, 'delete'])->name('api.category.delete');
 
     Route::get('/product', [ProductController::class, 'index'])->name('api.product');
+    Route::post('/product', [ProductController::class, 'add'])->name('api.product.add');
+    Route::put('/product', [ProductController::class, 'update'])->name('api.product.update');
+    Route::delete('/product/{product}', [ProductController::class, 'delete'])->name('api.product.delete');
 
     Route::get('/shop', [ShopController::class, 'index'])->name('api.shop');
     Route::post('/shop', [ShopController::class, 'add'])->name('api.shop.add');

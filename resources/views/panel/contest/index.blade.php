@@ -250,7 +250,7 @@
 
                     window.actionsFormatter = function (value, row, index) {
                         const view_button = [
-                            '<a href="/panel/zgloszenie/' + row.id + '" title="Zobacz" class="show" data-toggle="modal" data-target="#modalTask">',
+                            '<a href="{{ route('back.contest') }}/' + row.id + '" title="Zobacz" class="show icon">',
                             '   <i class="bi bi-eye-fill"></i>',
                             '</a>'].join('');
                         return view_button ;

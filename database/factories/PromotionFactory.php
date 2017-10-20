@@ -15,10 +15,10 @@ use Illuminate\Support\Str;
 $factory->define(Promotion::class, function (Faker $faker) {
 
     $maxDate = Carbon::now()->subYears(18)->subDay(); // Odejmuje 18 lat i 1 dzień
-    $category_id = Category::select('id')->inRandomOrder()->pluck('id')->first();
-    $product_id = Product::select('id')->inRandomOrder()->pluck('id')->first();
-    $shop_id = Shop::select('id')->inRandomOrder()->pluck('id')->first();
-    $whence_id = Whence::select('id')->inRandomOrder()->pluck('id')->first();
+    $category = \factory(Category::class)->create();
+    $product = \factory(Product::class)->create();
+    $shop = \factory(Shop::class)->create();
+    $whence = \factory(Whence::class)->create();
 
     $obj = [
         'firstname' => $faker->firstName,
@@ -37,10 +37,10 @@ $factory->define(Promotion::class, function (Faker $faker) {
         'legal_3' => true,
         'legal_4' => true,
         'token' => Str::random(32),
-        'category_id' => $category_id,
-        'product_id' => $product_id,
-        'shop_id' => $shop_id,
-        'whence_id' => $whence_id,
+        'category_id' => $category->id,
+        'product_id' => $product->id,
+        'shop_id' => $shop->id,
+        'whence_id' => $whence->id,
     ];
 
     return $obj;

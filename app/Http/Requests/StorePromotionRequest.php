@@ -30,7 +30,7 @@ class StorePromotionRequest extends FormRequest
             'address' => 'bail|required|string|max:255',
             'city' => 'bail|required|string|min:2|max:64',
             'zip' => 'bail|required|regex:/^[0-9]{2}\-[0-9]{3}$/',
-            'email' => 'bail|required|string|max:255|email:rfc,dns|unique:promotions,email',
+            'email' => 'bail|required|email:rfc,dns|unique:promotions,email',
             'phone' => [
                 'bail',
                 'required',

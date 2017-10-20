@@ -28,7 +28,7 @@ class StoreContestRequest extends FormRequest
             'firstname' => 'bail|required|string|min:3|max:128',
             'lastname' => 'bail|required|string|min:3|max:128',
             'birthday' => 'bail|required|date_format:d-m-Y|before_or_equal:' . now()->subYears(18)->format('Y-m-d'),
-            'email' => 'bail|required|string|max:255|email:rfc,dns|unique:contests,email',
+            'email' => 'bail|required|email:rfc,dns|unique:contests,email',
             'whence' => 'bail|required|numeric|exists:whences,id',
             'title' => 'bail|required|string|max:128',
             'message' => 'bail|required|string|max:500',

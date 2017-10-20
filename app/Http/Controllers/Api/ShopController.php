@@ -15,7 +15,11 @@ use Illuminate\Support\Facades\DB;
 
 class ShopController extends Controller
 {
-    public function index(IndexShopRequest $request)
+    /**
+     * @param IndexShopRequest $request
+     * @return JsonResponse
+     */
+    public function index(IndexShopRequest $request): JsonResponse
     {
         $search = $request->input('search');
         $offset = $request->input('offset', 0);
@@ -36,7 +40,11 @@ class ShopController extends Controller
         ], Response::HTTP_OK);
     }
 
-    public function add(AddShopRequest $request)
+    /**
+     * @param AddShopRequest $request
+     * @return JsonResponse
+     */
+    public function add(AddShopRequest $request): JsonResponse
     {
         DB::beginTransaction();
 
@@ -76,7 +84,11 @@ class ShopController extends Controller
         }
     }
 
-    public function update(UpdateShopRequest $request)
+    /**
+     * @param UpdateShopRequest $request
+     * @return JsonResponse
+     */
+    public function update(UpdateShopRequest $request): JsonResponse
     {
         DB::beginTransaction();
 
@@ -118,6 +130,10 @@ class ShopController extends Controller
         }
     }
 
+    /**
+     * @param Shop $shop
+     * @return JsonResponse
+     */
     public function delete(Shop $shop): JsonResponse
     {
         DB::beginTransaction();

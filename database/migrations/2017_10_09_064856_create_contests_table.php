@@ -17,7 +17,7 @@ class CreateContestsTable extends Migration
             $table->bigIncrements('id');
             $table->string('firstname', 128);
             $table->string('lastname', 128);
-            $table->string('email', 255)->unique();
+            $table->string('email', 320)->unique();
             $table->date('birthday');
             $table->string('title', 128);
             $table->text('message', 500);

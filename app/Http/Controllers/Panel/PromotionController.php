@@ -13,7 +13,7 @@ class PromotionController extends Controller
         return view('panel/promotion/index');
     }
 
-    public function show(Request $request, int $id): View
+    public function show(Request $request, int $id)
     {
         $promotion = Promotion::with(['category','product','whence','shop'])
             ->where('id','=',$id)->first();

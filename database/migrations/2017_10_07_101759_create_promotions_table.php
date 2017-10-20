@@ -21,7 +21,7 @@ class CreatePromotionsTable extends Migration
             $table->string('address', 255);
             $table->string('city', 128);
             $table->string('zip', 6);
-            $table->string('email', 255)->unique();
+            $table->string('email', 320)->unique();
             $table->string('phone', 32);
             $table->string('receiptnb', 32);
             $table->string('img_receipt', 255);

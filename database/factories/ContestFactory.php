@@ -7,18 +7,20 @@ use App\Models\Whence;
 use Faker\Generator as Faker;
 use Illuminate\Database\Eloquent\Factory;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
 
 $factory->define(Contest::class, function (Faker $faker) {
 
     $maxDate = Carbon::now()->subYears(18)->subDay(); // Odejmuje 18 lat i 1 dzień
-    $whence_id = Whence::select('id')->inRandomOrder()->pluck('id')->first();
+//    $whence_id = Whence::select('id')->inRandomOrder()->pluck('id')->first();
+    $whence = \factory(Whence::class)->create();
 
     $obj = [
         'firstname' => $faker->firstName,
         'lastname' => $faker->lastName,
         'birthday' => $faker->dateTimeBetween($maxDate)->format('d-m-Y'),
         'email' => $faker->unique()->safeEmail,
-        'whence_id' => $whence_id,
+        'whence_id' => $whence->id,
         'title' => $faker->text(128),
         'message' => $faker->text(500),
         'img_tip' => null,
@@ -30,6 +32,7 @@ $factory->define(Contest::class, function (Faker $faker) {
         'legal_2' => true,
         'legal_3' => true,
         'legal_4' => true,
+        'token' => Str::random(32),
     ];
 
     switch ($faker->numberBetween(1,3))
