@@ -10,6 +10,8 @@ class Whence extends Model
 {
     protected $fillable = ['id', 'name'];
 
+    public $timestamps = false;
+
     public function promotions()
     {
         return $this->hasMany(Promotion::class);
