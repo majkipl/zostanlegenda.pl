@@ -62,9 +62,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/panel', [PanelController::class, 'index'])->name('back.home');
 
     Route::middleware(['can:isAdmin'])->group(function () {
-        Route::get('/panel/zgloszenia/promocja', [\App\Http\Controllers\Panel\PromotionController::class, 'index'])->name('back.promotion');
-        Route::get('/panel/zgloszenia/konkurs', [\App\Http\Controllers\Panel\ContestController::class, 'index'])->name('back.contest');
-//        Route::get('/panel/zgloszenie/{id}', [\App\Http\Controllers\Panel\ApplicationController::class, 'show'])->name('panel.app.show');
+        Route::get('/panel/zgloszenie/promocja', [\App\Http\Controllers\Panel\PromotionController::class, 'index'])->name('back.promotion');
+        Route::get('/panel/zgloszenie/konkurs', [\App\Http\Controllers\Panel\ContestController::class, 'index'])->name('back.contest');
+        Route::get('/panel/zgloszenie/promocja/{promotion}', [\App\Http\Controllers\Panel\PromotionController::class, 'show'])->name('back.promotion.show');
+        Route::get('/panel/zgloszenie/konkurs/{contest}', [\App\Http\Controllers\Panel\ContestController::class, 'show'])->name('back.contest.show');
 
         Route::get('/panel/kategoria', [CategoryController::class, 'index'])->name('back.category');
         Route::get('/panel/kategoria/dodaj', [CategoryController::class, 'create'])->name('back.category.create');
@@ -83,10 +84,3 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/panel/sklep/{shop}', [ShopController::class, 'show'])->name('back.shop.show');
     });
 });
-
-
-
-
-//----------------------------------
-//Route::get('/formularz/pobierz-produkty', 'HomeController@index')->name('front.get.products');
-//Route::get('/pobierz', 'HomeController@index')->name('front.download');

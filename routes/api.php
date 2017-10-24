@@ -18,17 +18,17 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//Route::middleware('auth:api')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
 
 Route::post('/contest/verified', [ContestController::class, 'verified'])->name('api.contests.veryfied');
 Route::get('/product', [ProductController::class, 'index'])->name('api.products');
-Route::get('/product/category/{category}', [ProductController::class, 'category'])->name('api.products.category');
+Route::get('/products/category/{category}', [ProductController::class, 'category'])->name('api.products.category');
 
 
 
-Route::middleware(['api'])->group(function () {
+Route::middleware(['myauth:api'])->group(function () {
     Route::get('/category', [CategoryController::class, 'index'])->name('api.category');
     Route::post('/category', [CategoryController::class, 'add'])->name('api.category.add');
     Route::put('/category', [CategoryController::class, 'update'])->name('api.category.update');
