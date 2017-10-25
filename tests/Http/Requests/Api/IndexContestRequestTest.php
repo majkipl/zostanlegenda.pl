@@ -3,9 +3,9 @@
 namespace Tests\Http\Requests\Api;
 
 use App\Http\Requests\Api\IndexContestRequest;
-use Tests\Feature\Api\BootstrapTable\BootstrapTableTestCase;
+use Tests\Feature\Api\Validation\ValidationTestCase;
 
-class IndexContestRequestTest extends BootstrapTableTestCase
+class IndexContestRequestTest extends ValidationTestCase
 {
 
     /** @test */
