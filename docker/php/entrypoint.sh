@@ -11,10 +11,10 @@ chmod -R 777 /var/www/html/storage
 
 composer install --no-interaction --no-progress
 
-npm install -g n
-n 8.6.0
-npm install
-npm run build
+#npm install -g n
+#n 8.6.0
+#npm install
+#npm run build
 
 php artisan key:generate            # generujemy klucz
 php artisan migrate:fresh --seed    # robimy migracje wraz z seed'ami #
