@@ -36,7 +36,9 @@ class ContestController extends Controller
     {
         $searchKeyword = $request->input('phrase');
 
-        $applications = Contest::whereNull('token')
+        $applications = Contest::select('id', 'firstname', 'lastname', 'title', 'message', 'img_tip', 'video_url', 'video_type',
+            'video_id', 'video_image_id')
+            ->whereNull('token')
             ->where(function ($query) use ($searchKeyword) {
                 $query->where('title', 'LIKE', '%' . $searchKeyword . '%')
                     ->orWhere('message', 'LIKE', '%' . $searchKeyword . '%')

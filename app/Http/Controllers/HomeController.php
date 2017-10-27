@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contest;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,7 +24,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // todo: co z nagrodami tygodnia?
+        $applications = Contest::whereNull('token')
+            ->whereNotNull('week')
+            ->orderBy('id')
+            ->take(6)
+            ->get();
+
         return view('home/index', [
             'isEndPromotion' => false,
             'isEndContest' => false,

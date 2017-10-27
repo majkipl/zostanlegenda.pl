@@ -32,7 +32,7 @@ $factory->define(Contest::class, function (Faker $faker) {
         'legal_2' => true,
         'legal_3' => true,
         'legal_4' => true,
-        'token' => Str::random(32),
+        'token' => rand(0,1) ? Str::random(32) : null,
     ];
 
     switch ($faker->numberBetween(1,3))

@@ -31,6 +31,7 @@ class CreateContestsTable extends Migration
             $table->boolean('legal_3')->default(true);
             $table->boolean('legal_4')->default(true);
             $table->string('token', 32)->nullable();
+            $table->tinyInteger('week')->nullable();
             $table->timestamps();
 
             $table->unsignedBigInteger('whence_id');

@@ -449,41 +449,6 @@ var starter = {
         },
 
         onSubmit: function () {
-            // $(document).on('submit', '#kontakt form', function () {
-            //     const fields = starter.getFields($(this).closest('form'));
-            //     const url = $(this).closest('form').attr('action');
-            //
-            //     axios({
-            //         method: 'post',
-            //         url: url,
-            //         headers: {
-            //             'content-type': 'multipart/form-data',
-            //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            //         },
-            //         data: fields,
-            //     }).then(function (response) {
-            //         $("#kontakt h2").html(response.data.results.message);
-            //         $("#kontakt #form").hide();
-            //     }).catch(function (error) {
-            //         $(`.error-post`).text('');
-            //         if (error.response) {
-            //             Object.keys(error.response.data.errors).map((item) => {
-            //                 $(`.error-${item}`).text(error.response.data.errors[item][0]);
-            //             });
-            //         } else if (error.request) {
-            //             // The request was made but no response was received
-            //             // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-            //             // http.ClientRequest in node.js
-            //             console.log(error.request);
-            //         } else {
-            //             // Something happened in setting up the request that triggered an Error
-            //             console.log('Error', error.message);
-            //         }
-            //     });
-            //
-            //     return false;
-            // });
-
             $(document).on('submit', '#formContact form', function () {
                 const fields = starter.getFields($(this).closest('form'));
                 const url = $(this).closest('form').attr('action');
@@ -498,8 +463,6 @@ var starter = {
                 }).then(function (response) {
                     $('#contact h3').html(response.data.results.message);
                     $('#contact .form').hide();
-                    // $("#kontakt h2").html(response.data.results.message);
-                    // $("#kontakt #form").hide();
                 }).catch(function (error) {
                     $(`.error-post`).text('');
                     if (error.response) {
@@ -545,7 +508,6 @@ var starter = {
                     data: formData,
                 }).then(function (response) {
                     window.location = response.data.results.url;
-                    // console.log('response');
                 }).catch(function (error) {
                     $(`.error-post`).text('');
                     if (error.response) {
@@ -663,6 +625,8 @@ var starter = {
         },
 
         get_apps: function () {
+            console.log('GET APPS');
+
             axios({
                 method: 'post',
                 url: '/api/contest/verified',

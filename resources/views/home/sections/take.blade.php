@@ -40,7 +40,7 @@ E D
                         <p>Odbierz gwarantowany prezent – golarkę podróżną Remington R95.</p>
                     </div>
                     <div class="col-xs-12 buttons">
-                        <a href="/formularz/promocja/" class="cta-button">ODBIERZ</a> <a href="{{ asset('promocja.pdf') }}" class="cta-button cta-border" target="_blank"><span>REGULAMIN PROMOCJI</span></a>
+                        <a href="{{ route('front.form.promo') }}" class="cta-button">ODBIERZ</a> <a href="{{ asset('promocja.pdf') }}" class="cta-button cta-border" target="_blank"><span>REGULAMIN PROMOCJI</span></a>
                     </div>
                 </div>
             </div>
@@ -57,7 +57,7 @@ E D
                             <p>Wygraj 10&nbsp;000&nbsp;zł na jego realizację!</p>
                         </div>
                         <div class="col-xs-12 buttons">
-                            <a href="/formularz/konkurs/" class="cta-button">WEŹ UDZIAŁ</a> <a href="{{ asset('konkurs.pdf') }}" class="cta-button cta-border" target="_blank"><span>REGULAMIN KONKURSU</span></a>
+                            <a href="{{ route('front.form.contest') }}" class="cta-button">WEŹ UDZIAŁ</a> <a href="{{ asset('konkurs.pdf') }}" class="cta-button cta-border" target="_blank"><span>REGULAMIN KONKURSU</span></a>
                         </div>
                     </div>
                 </div>

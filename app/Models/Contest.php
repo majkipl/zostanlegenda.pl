@@ -12,7 +12,7 @@ class Contest extends Model
         'id', 'firstname', 'lastname', 'email', 'birthday',
         'title', 'message', 'img_tip', 'video_url', 'video_type',
         'video_id', 'video_image_id', 'legal_1', 'legal_2',
-        'legal_3', 'legal_4', 'whence_id', 'token'];
+        'legal_3', 'legal_4', 'whence_id', 'token', 'week'];
 
     /**
      * @return BelongsTo
