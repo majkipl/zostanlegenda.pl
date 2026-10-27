@@ -69,23 +69,9 @@ var starter = {
 
             starter.main.keyup();
 
-            //starter.main.focus();
-
-            //starter.main.featherlight();
-
             starter.main.owl();
 
             starter.main.selectbox();
-
-            //starter.main.bias();
-
-            // starter.main.upload('receipt');
-            // starter.main.upload('ean');
-            // starter.main.upload('tip');
-
-            //starter.main.painter();
-
-            //starter.main.timer();
 
             starter._var.filter["phrase"] = '';
             starter._var.filter["order"] = 0;

@@ -26,8 +26,6 @@ Route::post('/contest/verified', [ContestController::class, 'verified'])->name('
 Route::get('/product', [ProductController::class, 'index'])->name('api.products');
 Route::get('/products/category/{category}', [ProductController::class, 'category'])->name('api.products.category');
 
-
-
 Route::middleware(['myauth:api'])->group(function () {
     Route::get('/category', [CategoryController::class, 'index'])->name('api.category');
     Route::post('/category', [CategoryController::class, 'add'])->name('api.category.add');
